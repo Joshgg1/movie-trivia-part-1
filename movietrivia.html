@@ -33,6 +33,7 @@
         // Captain America: https://www.amazon.com/POSTER-STOP-ONLINE-Captain-America/dp/B08Z82QX9Y
         // Black Widow: https://www.amazon.com/Black-Widow-Movie-Poster-Authenticity/dp/B08B4CFVTJ
         // Guardians: https://www.amazon.com/Guardians-Galaxy-Movie-24x36-Poster/dp/B00LM3PI1U
+        var questionNumber = ""
         let imageArray = ["blackpanther.jpg", "blackwidow.jpg", "captainamerica.jpg",
         "captainmarvel.jpg", "guardians.jpg", "shangchi.jpg"];
 
@@ -43,7 +44,15 @@
 
         function displayRandomQuestion()
         {
-            console.log('To Do: Implement display RandomQuestion()'); 
+            var arrayLength = movieArray.length;
+            // questionNumber =  Math.floor(Math.random() * (max - min + 1)) + min; 
+            questionNumber = randomInt(0, arrayLength - 1)
+            var picture = formatImage(imageArray, questionNumber)
+            var question = (movieArray, questionNumber)
+            divIdPic.innerHTML = picture;
+            divIdQuestion.innerHTML = question;
+            divIdAnswer.innerHTML = ""
+
         }
 
         function checkAnswer()
@@ -63,12 +72,31 @@
             let displayOutput = 'This is the full answer key. Refresh the page when you are done: <br>';
             for (let i =0; i < imageArray.length; i++)
             {
-                displayOutput += formatImage(imageArray, 1); 
+                displayOutput += formatImage(imageArray, i); 
                 displayOutput += '<br>'; 
                 displayOutput += yearArray[i]; 
                 displayOutput += '<br> <br>';
             }
             document.getElementById('divIdFullAnswerKey').innerHTML = displayOutput;
+        }
+        function formatQuestion(inputArray, index)
+        {
+            // item variable
+            let item = inputArray[index];
+            //add question output
+            displayOutput+="<h2>In what year was " + item + " released? </h2>"
+
+            document.getElementById('divIdQuestion').innerHTML = displayOutput;
+        }
+        // Description: Return a random integer, n, such that min <= n <= max 
+        // Citation: Mozilla Foundation, https://developer.mozilla.org/enUS/docs/Web/JavaScript/Reference/Global_Objects/Math/random 
+        // Input/Parameters: Two floating point numbers, min and max 
+        // Output/Return: Returns a random integer between min and max 
+        function randomInt(min, max) 
+        {
+            min = Math.ceil(min); 
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min; // inclusive on min and max
         }
 
         
@@ -76,7 +104,7 @@
 
     </script>
 
-    <body style="background-color: #27cbfd;">
+    <body onload="displayRandomQuestion()">
         <h1>Marvel Movie Quiz</h1>
         <br>
         <p>Write the year in which this marvel movie was released</p>
